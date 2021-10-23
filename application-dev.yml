@@ -1,0 +1,160 @@
+# 开发环境
+
+# 项目相关配置
+dqalpha:
+  # 名称
+  name: dqalpha
+  # 版本
+  version: 3.5.0
+  # 版权年份
+  copyrightYear: 2021
+  # 实例演示开关
+  demoEnabled: true
+  # 文件路径 示例（ Windows配置D:/ruoyi/uploadPathpathMapping，Linux配置 /home/ruoyi/uploadPath）
+  profile: D:/
+  # 获取ip地址开关
+  addressEnabled: false
+  # 验证码类型 math 数组计算 char 字符验证
+  captchaType: char
+
+
+# token配置
+token:
+  # 令牌自定义标识
+  header: Authorization
+  # 令牌密钥
+  secret: WJPghoTIVyhdRA0lfqm+bcmplBNtSvJWiBrbFebR6qGCEAyljXReWh6ReqnDZh+XWgvFtajB5hZgKJOvizM7YQ==
+  # 令牌有效期（开发环境配置7天 7*24*60）
+  expireTime: 10080
+
+
+# Spring配置
+spring:
+  # 资源信息
+  messages:
+    # 国际化资源文件路径
+    basename: i18n/messages
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    druid:
+      # 主库数据源
+      master:
+        url: jdbc:mysql://gz-cdb-qhhjcef7.sql.tencentcdb.com:58963/school_dev?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=Asia/Shanghai
+        username: school
+        password: Alpha@1DqL!
+      # 从库数据源
+      slave:
+        # 从数据源开关/默认关闭
+        enabled: false
+        url:
+        username:
+        password:
+      # 初始连接数
+      initialSize: 5
+      # 最小连接池数量
+      minIdle: 10
+      # 最大连接池数量
+      maxActive: 20
+      # 配置获取连接等待超时的时间
+      maxWait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      timeBetweenEvictionRunsMillis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      minEvictableIdleTimeMillis: 300000
+      # 配置一个连接在池中最大生存的时间，单位是毫秒
+      maxEvictableIdleTimeMillis: 900000
+      # 配置检测连接是否有效
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      webStatFilter:
+        enabled: true
+      statViewServlet:
+        enabled: true
+        # 设置白名单，不填则允许所有访问
+        allow:
+        url-pattern: /druid/*
+        # 控制台管理用户名和密码
+        login-username: ruoyi
+        login-password: 123456
+      filter:
+        stat:
+          enabled: true
+          # 慢SQL记录
+          log-slow-sql: true
+          slow-sql-millis: 1000
+          merge-sql: true
+        wall:
+          config:
+            multi-statement-allow: true
+  # 文件上传
+  servlet:
+    multipart:
+      # 单个文件大小
+      max-file-size:  10MB
+      # 设置总上传的文件大小
+      max-request-size:  20MB
+  # 服务模块
+  devtools:
+    restart:
+      # 热部署开关
+      enabled: true
+  # redis 配置
+  redis:
+    # 地址
+    #腾讯云
+    #    host: 1.14.153.90
+    #内部服务器93
+    host: 192.168.10.93
+    key:
+      prefix:
+        loginAuthCode: "portal:authCode:login"
+        registerAuthCode: "portal:authCode:register"
+        forgetAuthCode: "portal:authCode:forget"
+        token: "portal:token"
+        orderId: "portal:orderId:"
+      expire:
+        authCode: 300 # 验证码超期时间
+        token: 10*60*60*1000 #token超时时间
+    # 端口，默认为6379
+    port: 16379
+    # 数据库索引
+    database: 0
+    # 密码
+    password: Alpha@1DqL!
+    # 连接超时时间
+    timeout: 10s
+    lettuce:
+      pool:
+        # 连接池中的最小空闲连接
+        min-idle: 0
+        # 连接池中的最大空闲连接
+        max-idle: 8
+        # 连接池的最大数据库连接数
+        max-active: 8
+        # #连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1ms
+
+wx:
+  appId: wx5539b0c613a296fe
+  appSecret: e5c2d0ad695adbb60023a35f82f49c76
+  alpha:
+    secret: alpha_key
+
+
+# ====================== ↓↓↓↓↓↓ 93内网MinIO文件服务器 ↓↓↓↓↓↓ ======================
+minio:
+  url: http://192.168.10.93:9000/
+  accessKey: minio
+  secretKey: miniostorage
+  bucketName: cms
+  videoBucketName: education
+
+# ====================== ↓↓↓↓↓↓ 90腾讯云MinIO文件服务器 ↓↓↓↓↓↓ ======================
+#minio:
+#  url: http://1.14.153.90:9000/
+#  accessKey: minioadmin
+#  secretKey: minioadmin
+#  bucketName: file
